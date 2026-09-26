@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="google-site-verification" content="L3C9lIQ39JZmPamxWVkPCDh_jv3XJY_P3P0Ruij1H38" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>بطاقة تنفيذ برنامج نشاط طلابي</title>
+<style>
+:root{
+  --blue:#c9dde6;
+  --line:#687a80;
+  --ink:#263238;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:#eef2f4;
+  color:var(--ink);
+  font-family:"Tahoma","Arial",sans-serif;
+}
+.app{
+  display:flex;
+  gap:22px;
+  max-width:1500px;
+  margin:22px auto;
+  padding:0 18px;
+  align-items:flex-start;
+}
+.panel{
+  width:360px;
+  background:#fff;
+  border:1px solid #d5dde1;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 5px 22px #00000010;
+  position:sticky;
+  top:15px;
+}
+.panel h1{font-size:20px;margin:0 0 6px}
+.panel .sub{font-size:12px;color:#68777d;margin-bottom:15px}
+.group{margin-bottom:13px}
+label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}
+.hijri-picker{display:grid;grid-template-columns:1fr 1.5fr 1.2fr;gap:5px}
+.option-box{border:1px solid #c8d2d7;border-radius:7px;padding:8px;background:#fff}
+.check-option{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:400;margin:3px 0}
+.check-option input{width:auto;margin:0}
+.option-box .check-option{white-space:nowrap}
+.hijri-picker select,
+input,textarea,select{
+  width:100%;
+  padding:9px 10px;
+  border:1px solid #c8d2d7;
+  border-radius:7px;
+  font:inherit;
+  font-size:13px;
+  background:#fff;
+}
+textarea{min-height:62px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;cursor:pointer}
+.primary{background:#176b73;color:white}
+.secondary{background:#e9eff1;color:#263238}
+.note{font-size:11px;line-height:1.6;color:#69777c;margin-top:12px}
+
+.workspace{flex:1;min-width:0}
+.preview-title{font-weight:700;margin:0 0 8px;text-align:center}
+
+.sheet{
+  width:210mm;
+  height:297mm;
+  background:#fff;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 6px 30px #0002;
+  direction:rtl;
+}
+
+/* عناصر النسخة المطبوعة موضوعة وفق أبعاد النموذج المرجعي */
+.logo{
+  position:absolute;
+  top:1mm;
+  left:10mm;
+  width:27mm;
+  height:auto;
+  object-fit:contain;
+}
+.title{
+  position:absolute;
+  top:15.2mm;
+  left:10mm;
+  right:10mm;
+  margin:0;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:700;
+  text-align:center;
+}
+
+.table{
+  position:absolute;
+  top:23.8mm;
+  right:10mm;
+  width:176mm;
+  height:143.4mm;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:9.6px;
+  direction:rtl;
+}
+.table col.c1{width:29.5%}
+.table col.c2{width:16%}
+.table col.c3{width:31.5%}
+.table col.c4{width:23%}
+
+.table td{
+  border:1px solid var(--line);
+  padding:1.5px 4px;
+  vertical-align:middle;
+  line-height:1.25;
+}
+.label{
+  font-weight:700;
+  text-align:right;
+}
+.value{
+  text-align:center;
+  word-break:break-word;
+}
+.shade{background:var(--blue)}
+.r50 td{height:13.23mm}
+.r27 td{height:7.14mm}
+.r28 td{height:7.41mm}
+.r40 td{height:10.58mm}
+.r55 td{height:14.55mm}
+.r89 td{height:23.55mm}
+.r46 td{height:12.17mm}
+
+.datecell{
+  padding:0 3px!important;
+  font-size:9px;
+  text-align:center;
+}
+.datecell span{
+  display:inline-block;
+  min-width:13mm;
+  text-align:center;
+}
+.date-part{
+  text-align:center;
+  font-size:9px;
+}
+.parent-count{
+  font-weight:700;
+  text-align:center;
+}
+.program-options{
+  font-size:8.5px!important;
+  line-height:1.62!important;
+  text-align:right!important;
+  white-space:nowrap;
+}
+.circle-option{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border:1px solid #5f6f75;
+  border-radius:50%;
+  margin-left:3px;
+  vertical-align:middle;
+}
+.parent-note{
+  font-size:8.5px;
+  line-height:1.35;
+  text-align:center;
+}
+.partner-label{
+  font-size:9px;
+  text-align:center;
+  font-weight:700;
+}
+.partner-value{
+  font-size:9px;
+  text-align:center;
+  word-break:break-word;
+}
+.notes{
+  vertical-align:top!important;
+  padding-top:4px!important;
+}
+
+.signatures{
+  position:absolute;
+  top:170.5mm;
+  left:0;
+  right:0;
+  height:26mm;
+  font-size:9.2px;
+  line-height:1.95;
+}
+.signature-left{
+  position:absolute;
+  left:13.5mm;
+  top:0;
+  width:42mm;
+  text-align:right;
+}
+.signature-right{
+  position:absolute;
+  right:7mm;
+  top:0;
+  width:45mm;
+  text-align:right;
+}
+.signatures b{font-weight:700}
+
+.footer{display:none}
+
+.placeholder{color:#7c8a90}
+
+@media(max-width:1050px){
+  .app{display:block}
+  .panel{width:100%;position:static;margin-bottom:20px}
+  .sheet{transform-origin:top center}
+}
+
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff!important}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .app{display:block;margin:0;padding:0}
+  .panel,.preview-title{display:none!important}
+  .workspace{width:210mm}
+  .sheet{
+    width:210mm;
+    height:297mm;
+    margin:0;
+    box-shadow:none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <h1>لوحة تعبئة النموذج</h1>
+    <div class="sub">اكتبي البيانات وستظهر مباشرة في بطاقة النشاط. التصميم مضبوط للطباعة في صفحة A4 واحدة.</div>
+
+    <div class="group"><label>اسم البرنامج</label><input id="programName" placeholder="مثال: برنامج الأمن السيبراني"></div>
+    <div class="group"><label>المجال</label><input id="field" placeholder="مثال: المهارات الرقمية"></div>
+    <div class="grid2">
+      <div class="group"><label>عدد حصص البرنامج</label><input id="lessons" type="number" min="0"></div>
+      <div class="group"><label>الفصل الدراسي</label><input id="semester" placeholder="الأول"></div>
+    </div>
+    <div class="grid2">
+      <div class="group"><label>بداية التنفيذ - اليوم</label><input id="startDay"></div>
+      <div class="group"><label>الأسبوع</label><input id="startWeek"></div>
+    </div>
+    <div class="group"><label>بداية التنفيذ - التاريخ</label><div class="hijri-picker"><select id="startDayH"></select><select id="startMonthH"></select><select id="startYearH"></select></div></div>
+    <div class="grid2">
+      <div class="group"><label>نهاية التنفيذ - اليوم</label><input id="endDay"></div>
+      <div class="group"><label>الأسبوع</label><input id="endWeek"></div>
+    </div>
+    <div class="group"><label>نهاية التنفيذ - التاريخ</label><div class="hijri-picker"><select id="endDayH"></select><select id="endMonthH"></select><select id="endYearH"></select></div></div>
+    <div class="grid2">
+      <div class="group"><label>الصف</label><input id="grade" placeholder="مثال: الأول متوسط"></div>
+      <div class="group"><label>اسم المعلمة المنفذة</label><input id="teacher"></div>
+    </div>
+    <div class="grid2">
+      <div class="group"><label>عدد الطلبة المشاركين</label><input id="students" type="number" min="0"></div>
+      <div class="group"><label>عدد المشاركين من ذوي الإعاقة</label><input id="special" type="number" min="0"></div>
+    </div>
+    <div class="group"><label>عدد أولياء الأمور المشاركين</label><input id="parents" type="number" min="0"></div>
+    <div class="group">
+      <label>مسار / نوع البرنامج</label>
+      <div class="option-box">
+        <label class="check-option"><input type="checkbox" id="enrichment"> بنك الإثراءات</label>
+        <label class="check-option"><input type="checkbox" id="selfDevelopment"> التطوير الذاتي</label>
+        <label class="check-option"><input type="checkbox" id="values"> قيمنا الغالية</label>
+        <label class="check-option"><input type="checkbox" id="readingClub"> نادي القراءة</label>
+      </div>
+    </div>
+    <div class="group"><label>عند تنفيذ المشاركة غير منصة مدرستي ما هي آلية التنفيذ؟</label><textarea id="parentMechanism"></textarea></div>
+    <div class="group"><label>عدد الشراكات المجتمعية</label><input id="partnershipCount" type="number" min="0"></div>
+    <div class="group"><label>أسماء الشراكات المجتمعية</label><textarea id="partnershipNames"></textarea></div>
+    <div class="group"><label>ملاحظات</label><textarea id="notes"></textarea></div>
+
+    <hr style="border:0;border-top:1px solid #e1e6e8;margin:15px 0">
+    <div class="grid2">
+      <div class="group"><label>اسم رائدة النشاط</label><input id="activityLeader"></div>
+      <div class="group"><label>اسم اسم المعلمة المنفذة</label><input id="implementer"></div>
+    </div>
+    <div class="grid2">
+      <div class="group"><label>تاريخ رائدة النشاط</label><div class="hijri-picker"><select id="leaderDayH"></select><select id="leaderMonthH"></select><select id="leaderYearH"></select></div></div>
+      <div class="group"><label>تاريخ المعلمة المنفذة</label><div class="hijri-picker"><select id="implementerDayH"></select><select id="implementerMonthH"></select><select id="implementerYearH"></select></div></div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" onclick="window.print()">طباعة A4</button>
+      <button class="secondary" onclick="saveData()">حفظ</button>
+      <button class="secondary" onclick="loadData()">استرجاع</button>
+      <button class="secondary" onclick="clearData()">مسح البيانات</button>
+    </div>
+    <div class="note">الحفظ هنا محلي على الجهاز/المتصفح. إذا أردتِ نسخة تعمل لعدة مستخدمين مع تسجيل دخول وقاعدة بيانات، يمكن ربط هذا التصميم بقاعدة بيانات لاحقًا.</div>
+  </aside>
+
+  <main class="workspace">
+    <div class="preview-title">معاينة بطاقة تنفيذ برنامج نشاط طلابي</div>
+    <section class="sheet" id="sheet">
+      <img class="logo" alt="شعار وزارة التعليم"
+           src="https://upload.wikimedia.org/wikipedia/ar/2/20/MOELogo.svg">
+      <div class="title">* بطاقة تنفيذ برنامج نشاط طلابي</div>
+
+      <table class="table">
+  <colgroup>
+    <col class="c1">
+    <col class="c2">
+    <col class="c3">
+    <col class="c4">
+  </colgroup>
+
+  <tr class="r50">
+    <td class="label">اسم البرنامج</td>
+    <td class="value" colspan="3" id="v-programName"></td>
+  </tr>
+
+  <tr class="r27">
+    <td class="label shade">المجال</td>
+    <td class="value shade" colspan="3" id="v-field"></td>
+  </tr>
+
+  <tr class="r28">
+    <td class="label">عدد حصص البرنامج</td>
+    <td class="value" colspan="3" id="v-lessons"></td>
+  </tr>
+
+  <tr class="r28">
+    <td class="label shade">الفصل الدراسي</td>
+    <td class="value shade" colspan="3" id="v-semester"></td>
+  </tr>
+
+  <tr class="r27">
+    <td class="label">بداية التنفيذ</td>
+    <td class="date-part">اليوم: <span id="v-startDay"></span></td>
+    <td class="date-part">الأسبوع: <span id="v-startWeek"></span></td>
+    <td class="datecell">التاريخ: <span id="v-startDateHijri"></span></td>
+  </tr>
+
+  <tr class="r28">
+    <td class="label">نهاية التنفيذ</td>
+    <td class="date-part">اليوم: <span id="v-endDay"></span></td>
+    <td class="date-part">الأسبوع: <span id="v-endWeek"></span></td>
+    <td class="datecell">التاريخ: <span id="v-endDateHijri"></span></td>
+  </tr>
+
+  <tr class="r28">
+    <td class="label">الصف</td>
+    <td class="value" colspan="3" id="v-grade"></td>
+  </tr>
+
+  <tr class="r40">
+    <td class="label shade">المعلم/ة المنفذ/ة</td>
+    <td class="value shade" colspan="3" id="v-teacher"></td>
+  </tr>
+
+  <tr class="r40">
+    <td class="label">عدد الطلبة المشاركين</td>
+    <td class="value" colspan="3" id="v-students"></td>
+  </tr>
+
+  <tr class="r55">
+    <td class="label shade">عدد الطلبة المشاركين<br>من ذوي الإعاقة</td>
+    <td class="value shade" colspan="3" id="v-special"></td>
+  </tr>
+
+  <tr class="r89">
+    <td class="label shade">عدد أولياء الأمور<br>المشاركين في البرنامج</td>
+    <td class="parent-count shade" id="v-parents"></td>
+    <td class="parent-note shade">
+      عند تنفيذ المشاركة عبر منصة مدرستي<br>ما هي آلية التنفيذ؟
+      <div id="v-parentMechanism"></div>
+    </td>
+    <td class="program-options shade">
+      <div><span id="v-enrichment" class="circle-option"></span> بنك الإثراءات</div>
+      <div><span id="v-selfDevelopment" class="circle-option"></span> التطوير الذاتي</div>
+      <div><span id="v-values" class="circle-option"></span> قيمنا الغالية</div>
+      <div><span id="v-readingClub" class="circle-option"></span> نادي القراءة</div>
+    </td>
+  </tr>
+
+  <tr class="r55">
+    <td class="label shade">عدد الشراكات<br>المجتمعية</td>
+    <td class="partner-value shade" id="v-partnershipCount"></td>
+    <td class="partner-label shade">أسماء الشراكات المجتمعية</td>
+    <td class="partner-value shade" id="v-partnershipNames"></td>
+  </tr>
+
+  <tr class="r46">
+    <td class="label">ملاحظات</td>
+    <td class="value notes" colspan="3" id="v-notes"></td>
+  </tr>
+</table>
+
+      <div class="signatures">
+  <div class="signature-left">
+    <b>رائد/ة النشاط</b><br>
+    الاسم: <span id="v-activityLeader"></span><br>
+    التاريخ: <span id="v-leaderDateHijri"></span><br>
+    التوقيع: ____________________
+  </div>
+  <div class="signature-right">
+    <b>المعلم/ة المنفذ/ة</b><br>
+    الاسم: <span id="v-implementer"></span><br>
+    التاريخ: <span id="v-implementerDateHijri"></span><br>
+    التوقيع: ____________________
+  </div>
+</div>
+
+<div class="footer"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+const ids = [
+ "programName","field","lessons","semester","startDay","startWeek",
+ "endDay","endWeek","grade","teacher","students","special","parents",
+ "parentMechanism","partnershipCount","partnershipNames","notes","activityLeader",
+ "implementer","enrichment","selfDevelopment","values","readingClub"
+];
+function fmt(v){
+  if(!v) return "";
+  if(/^\\d{4}-\\d{2}-\\d{2}$/.test(v)){
+    const [y,m,d]=v.split("-");
+    return `${d}/${m}/${y}م`;
+  }
+  return v;
+}
+const hijriMonths = [
+  "محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة",
+  "رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"
+];
+
+function setupHijriPicker(prefix){
+  const day = document.getElementById(prefix+"DayH");
+  const month = document.getElementById(prefix+"MonthH");
+  const year = document.getElementById(prefix+"YearH");
+
+  day.innerHTML = '<option value="">اليوم</option>' +
+    Array.from({length:30},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join("");
+
+  month.innerHTML = '<option value="">الشهر</option>' +
+    hijriMonths.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("");
+
+  const currentYear = 1448;
+  year.innerHTML = '<option value="">السنة</option>' +
+    Array.from({length:12},(_,i)=>`<option value="${currentYear+i}">${currentYear+i} هـ</option>`).join("");
+
+  [day,month,year].forEach(el=>el.addEventListener("change",update));
+}
+
+function hijriValue(prefix){
+  const d=document.getElementById(prefix+"DayH").value;
+  const m=document.getElementById(prefix+"MonthH").value;
+  const y=document.getElementById(prefix+"YearH").value;
+  if(!d || !m || !y) return "";
+  return `${d}/${m}/${y} هـ`;
+}
+
+function updateHijriOutput(prefix, outputId){
+  const out=document.getElementById(outputId);
+  if(out) out.textContent=hijriValue(prefix);
+}
+
+
+function update(){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    const out=document.getElementById("v-"+id);
+    if(out && el) out.textContent=el.type==="checkbox" ? "" : el.value;
+    if(out && el && el.type==="checkbox"){
+      out.style.background = el.checked ? "#263238" : "#fff";
+    }
+  });
+
+  updateHijriOutput("start","v-startDateHijri");
+  updateHijriOutput("end","v-endDateHijri");
+  updateHijriOutput("leader","v-leaderDateHijri");
+  updateHijriOutput("implementer","v-implementerDateHijri");
+}
+
+
+function getFormData(){
+  const data={};
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    data[id]=el.type==="checkbox" ? el.checked : el.value;
+  });
+  ["start","end","leader","implementer"].forEach(prefix=>{
+    data[prefix+"DayH"]=document.getElementById(prefix+"DayH").value;
+    data[prefix+"MonthH"]=document.getElementById(prefix+"MonthH").value;
+    data[prefix+"YearH"]=document.getElementById(prefix+"YearH").value;
+  });
+  return data;
+}
+
+function saveData(){
+  localStorage.setItem("studentActivityCard",JSON.stringify(getFormData()));
+  alert("تم حفظ البيانات على هذا الجهاز.");
+}
+
+function loadData(){
+  const raw=localStorage.getItem("studentActivityCard");
+  if(!raw){alert("لا توجد بيانات محفوظة.");return}
+  const data=JSON.parse(raw);
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(data[id]!==undefined){
+      if(el.type==="checkbox") el.checked=!!data[id];
+      else el.value=data[id];
+    }
+  });
+  ["start","end","leader","implementer"].forEach(prefix=>{
+    ["DayH","MonthH","YearH"].forEach(s=>{
+      const id=prefix+s;
+      if(data[id]!==undefined) document.getElementById(id).value=data[id];
+    });
+  });
+  update();
+}
+
+
+function clearData(){
+  if(!confirm("هل تريدين مسح جميع البيانات؟")) return;
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el.type==="checkbox") el.checked=false;
+    else el.value="";
+  });
+  ["start","end","leader","implementer"].forEach(prefix=>{
+    ["DayH","MonthH","YearH"].forEach(s=>document.getElementById(prefix+s).value="");
+  });
+  update();
+}
+["start","end","leader","implementer"].forEach(setupHijriPicker);
+ids.forEach(id=>document.getElementById(id).addEventListener("input",update));
+update();
+</script>
+</body>
+</html>
