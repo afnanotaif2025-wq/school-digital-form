@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta name="google-site-verification" content="L3C9lIQ39JZmPamxWVkPCDh_jv3XJY_P3P0Ruij1H38" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>بطاقة تنفيذ برنامج نشاط طلابي</title>
@@ -192,7 +191,7 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
 
 .signatures{
   position:absolute;
-  top:170.5mm;
+  top:204mm;
   left:0;
   right:0;
   height:26mm;
@@ -216,6 +215,20 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
 .signatures b{font-weight:700}
 
 .footer{display:none}
+.evidence-upload{display:grid;gap:8px}
+.evidence-input{border:1px solid #c8d2d7;border-radius:7px;padding:8px;background:#f8fafb}
+.evidence-input span{display:block;font-size:11px;font-weight:700;margin-bottom:5px}
+.evidence-input input{padding:6px;font-size:11px;background:#fff}
+.remove-evidence{margin-top:5px;padding:5px 8px;font-size:10px;background:#edf1f2;color:#44545a}
+.upload-note{font-size:10px;color:#718087;margin-top:5px;line-height:1.5}
+.evidence-row td{height:31mm}
+.evidence-label{font-weight:700;text-align:right;vertical-align:middle!important}
+.evidence-cell{padding:2mm!important;text-align:center;vertical-align:middle!important}
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;width:100%;height:26mm}
+.evidence-box{border:1px solid #687a80;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+.evidence-box img{width:100%;height:100%;object-fit:contain;display:block}
+.evidence-empty{color:#7b888d;font-size:8px}
+
 
 .placeholder{color:#7c8a90}
 
@@ -285,6 +298,22 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
     <div class="group"><label>عدد الشراكات المجتمعية</label><input id="partnershipCount" type="number" min="0"></div>
     <div class="group"><label>أسماء الشراكات المجتمعية</label><textarea id="partnershipNames"></textarea></div>
     <div class="group"><label>ملاحظات</label><textarea id="notes"></textarea></div>
+    <div class="group">
+      <label>الشواهد (صورتان فقط)</label>
+      <div class="evidence-upload">
+        <div class="evidence-input">
+          <span>الشاهد الأول</span>
+          <input id="evidence1" type="file" accept="image/*">
+          <button type="button" class="remove-evidence" onclick="removeEvidence(1)">حذف الصورة</button>
+        </div>
+        <div class="evidence-input">
+          <span>الشاهد الثاني</span>
+          <input id="evidence2" type="file" accept="image/*">
+          <button type="button" class="remove-evidence" onclick="removeEvidence(2)">حذف الصورة</button>
+        </div>
+      </div>
+      <div class="upload-note">اختاري صورتين كحد أقصى، وستظهران في المعاينة والطباعة.</div>
+    </div>
 
     <hr style="border:0;border-top:1px solid #e1e6e8;margin:15px 0">
     <div class="grid2">
@@ -400,6 +429,22 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
     <td class="label">ملاحظات</td>
     <td class="value notes" colspan="3" id="v-notes"></td>
   </tr>
+
+  <tr class="evidence-row">
+    <td class="label evidence-label">الشواهد</td>
+    <td class="evidence-cell" colspan="3">
+      <div class="evidence-grid">
+        <div class="evidence-box">
+          <img id="v-evidence1" alt="الشاهد الأول" style="display:none">
+          <span id="evidenceEmpty1" class="evidence-empty">الشاهد الأول</span>
+        </div>
+        <div class="evidence-box">
+          <img id="v-evidence2" alt="الشاهد الثاني" style="display:none">
+          <span id="evidenceEmpty2" class="evidence-empty">الشاهد الثاني</span>
+        </div>
+      </div>
+    </td>
+  </tr>
 </table>
 
       <div class="signatures">
@@ -505,13 +550,58 @@ function getFormData(){
   return data;
 }
 
+function readEvidenceFile(index){
+  const input=document.getElementById("evidence"+index);
+  const file=input.files && input.files[0];
+  if(!file) return;
+  if(!file.type.startsWith("image/")){
+    alert("يرجى اختيار صورة فقط.");
+    input.value="";
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=function(){
+    localStorage.setItem("studentActivityEvidence"+index, reader.result);
+    setEvidencePreview(index, reader.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function setEvidencePreview(index, src){
+  const img=document.getElementById("v-evidence"+index);
+  const empty=document.getElementById("evidenceEmpty"+index);
+  if(src){
+    img.src=src;
+    img.style.display="block";
+    empty.style.display="none";
+  }else{
+    img.removeAttribute("src");
+    img.style.display="none";
+    empty.style.display="inline";
+  }
+}
+
+function removeEvidence(index){
+  document.getElementById("evidence"+index).value="";
+  localStorage.removeItem("studentActivityEvidence"+index);
+  setEvidencePreview(index,"");
+}
+
+function loadEvidence(){
+  [1,2].forEach(index=>{
+    setEvidencePreview(index,localStorage.getItem("studentActivityEvidence"+index)||"");
+  });
+}
+
 function saveData(){
   localStorage.setItem("studentActivityCard",JSON.stringify(getFormData()));
-  alert("تم حفظ البيانات على هذا الجهاز.");
+  [1,2].forEach(readEvidenceFile);
+  alert("تم حفظ البيانات والصور على هذا الجهاز.");
 }
 
 function loadData(){
   const raw=localStorage.getItem("studentActivityCard");
+  loadEvidence();
   if(!raw){alert("لا توجد بيانات محفوظة.");return}
   const data=JSON.parse(raw);
   ids.forEach(id=>{
@@ -541,10 +631,18 @@ function clearData(){
   ["start","end","leader","implementer"].forEach(prefix=>{
     ["DayH","MonthH","YearH"].forEach(s=>document.getElementById(prefix+s).value="");
   });
+  [1,2].forEach(index=>{
+    document.getElementById("evidence"+index).value="";
+    localStorage.removeItem("studentActivityEvidence"+index);
+    setEvidencePreview(index,"");
+  });
   update();
 }
 ["start","end","leader","implementer"].forEach(setupHijriPicker);
 ids.forEach(id=>document.getElementById(id).addEventListener("input",update));
+document.getElementById("evidence1").addEventListener("change",()=>readEvidenceFile(1));
+document.getElementById("evidence2").addEventListener("change",()=>readEvidenceFile(2));
+loadEvidence();
 update();
 </script>
 </body>
