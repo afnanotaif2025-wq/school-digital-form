@@ -102,7 +102,7 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
   top:23.8mm;
   right:10mm;
   width:176mm;
-  height:143.4mm;
+  height:auto;
   border-collapse:collapse;
   table-layout:fixed;
   font-size:9.6px;
@@ -222,11 +222,12 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
 .remove-evidence{margin-top:5px;padding:5px 8px;font-size:10px;background:#edf1f2;color:#44545a}
 .upload-note{font-size:10px;color:#718087;margin-top:5px;line-height:1.5}
 .evidence-row td{height:31mm}
+.evidence-row{break-inside:avoid;page-break-inside:avoid}
 .evidence-label{font-weight:700;text-align:right;vertical-align:middle!important}
 .evidence-cell{padding:2mm!important;text-align:center;vertical-align:middle!important}
 .evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm;width:100%;height:26mm}
 .evidence-box{border:1px solid #687a80;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
-.evidence-box img{width:100%;height:100%;object-fit:contain;display:block}
+.evidence-box img{width:100%;height:100%;object-fit:contain;display:block;max-width:100%;max-height:100%}
 .evidence-empty{color:#7b888d;font-size:8px}
 
 
@@ -240,6 +241,8 @@ button{border:0;border-radius:8px;padding:10px;font:inherit;font-weight:700;curs
 
 @media print{
   @page{size:A4 portrait;margin:0}
+  .evidence-row{display:table-row!important;visibility:visible!important}
+  .evidence-row td,.evidence-row img{visibility:visible!important}
   html,body{background:#fff!important}
   body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .app{display:block;margin:0;padding:0}
